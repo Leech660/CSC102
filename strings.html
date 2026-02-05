@@ -1,0 +1,135 @@
+<!-- Keagan Camacho -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Page title -->
+    <title>Secret Message</title>
+
+    <!-- Page styling -->
+    <style>
+        /* Color of page background */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2f;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            width: 400px;
+            margin: auto;
+            background-color: #2e2e48;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #secretMessage {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ffd700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Main container -->
+    <div class="container">
+
+        <!-- Page heading -->
+        <h1>User Input Validation</h1>
+
+        <!-- User input form -->
+        <form name="userForm">
+
+            <!-- First name -->
+            <input type="text" name="firstName" placeholder="First Name" required>
+
+            <!-- Last name -->
+            <input type="text" name="lastName" placeholder="Last Name" required>
+
+            <!-- Zip code -->
+            <input type="text" name="zipCode" placeholder="Zip Code" required>
+
+            <!-- Submit button -->
+            <input type="submit" value="Reveal Secret">
+        </form>
+
+
+        <p id="message"></p>
+
+        <!-- Secret message area -->
+        <div id="secretMessage"></div>
+
+    </div>
+
+   
+    <script>
+        // Reference the form
+        document.forms["userForm"].onsubmit = function () {
+
+            var firstName = document.forms["userForm"]["firstName"].value;
+
+            var lastName = document.forms["userForm"]["lastName"].value;
+
+            // Combine first nameand last name
+            var fullName = firstName + " " + lastName;
+
+            // Get zip code value
+            var zip = document.forms["userForm"]["zipCode"].value;
+
+            
+            document.getElementById("message").innerHTML = "";
+            document.getElementById("secretMessage").innerHTML = "";
+
+            // Check the full name length
+            if (fullName.length > 20) {
+                document.getElementById("message").innerHTML =
+                    "Name must be 20 characters or less.";
+                return false;
+            }
+
+            // Check the zip code length
+            if (zip.length !== 5) {
+                document.getElementById("message").innerHTML =
+                    "Zip code must be exactly 5 digits.";
+                return false;
+            }
+
+            // Check if zip code contains only numbers
+            if (isNaN(zip)) {
+                document.getElementById("message").innerHTML =
+                    "Zip code must contain only numbers.";
+                return false;
+            }
+
+            // Display secret message
+            document.getElementById("secretMessage").innerHTML =
+                "🎉 Welcome " + fullName +
+                "! Meow :3";
+
+            // Prevent the page from refreshing
+            return false;
+        };
+    </script>
+
+</body>
+</html>
