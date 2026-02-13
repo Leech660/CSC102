@@ -1,40 +1,201 @@
-<!-- Keagan, 1//2026 --> 
-<!-- DOCTYPE this is the first tag on the page and it tells the browser that this is an HTML5 page-->
+<!-- Keagan, 1/2026 -->
+<!-- This tells the browser this is an HTML5 document -->
 <!DOCTYPE html>
-<!-- the html tag goes next -->
+
+<!-- Root HTML tag -->
 <html>
-    <!-- the head section has info for the browser and search engine -->
-    <head>
-        <title>CSC102 Home Page</title>
-        <!-- add a link to the CSS file -->
-         <link rel="stylesheet" href="main.css">
-    </head>
-     
-    <!-- the body section holds the text and images that we want to show to the user -->
-    <body>
-        <header>
-         <h1>Welcome to my CSC102 Home Page</h1>
-         <!-- Create a nav section to hold the menu -->
-          <nav> 
+
+<!-- Head section contains information for the browser -->
+<head>
+
+    <!-- Title shown in browser tab -->
+    <title>CSC102 Home Page</title>
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="main.css">
+
+    <!-- Internal styling for creative look and feel -->
+    <style>
+        /* Style the entire page background */
+        body {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        /* Style the meme image */
+        #memeImage {
+            position: absolute;
+            width: 200px;
+        }
+
+        /* Style buttons */
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        /* Start button color */
+        #startButton {
+            background-color: limegreen;
+        }
+
+        /* Stop button color */
+        #stopButton {
+            background-color: crimson;
+        }
+
+        /* Message styling */
+        #message {
+            font-size: 20px;
+            margin-top: 15px;
+        }
+    </style>
+
+</head>
+
+<!-- Body holds content visible to user -->
+<body>
+
+    <!-- Header section -->
+    <header>
+        <h1>Welcome to my CSC102 Home Page</h1>
+
+        <!-- Navigation menu -->
+        <nav>
             <a href="index.html">Home</a>
             <br>
             <a href="boards.html">Boards</a>
-          </nav>
-        </header>
-        <!-- p is paragraph tag; has spacing around it by default-->
-        <p>
-            <!-- img is the image tag -->
-            <img id="memeImage" src="MEME.png">
-        </p>
-        <footer>
-            Keagan
-            <br>
-            university of advancing technology
-            <br>
-            2625 West Baseline Road
-            <br>
-            Tempe, AZ 85283
-            <br>
-        </footer>
-    </body>
+        </nav>
+    </header>
+
+    <!-- Meme image displayed on page -->
+    <img id="memeImage" src="MEME.png">
+
+    <!-- Form required for user input and submit -->
+    <form id="controlForm">
+
+        <!-- Start button -->
+        <button type="submit" id="startButton">Start</button>
+
+        <!-- Stop button -->
+        <button type="button" id="stopButton" disabled>Stop</button>
+
+    </form>
+
+    <!-- Area for validation messages using innerHTML -->
+    <div id="message"></div>
+
+    <!-- Footer section -->
+    <footer>
+        Keagan
+        <br>
+        University of Advancing Technology
+        <br>
+        2625 West Baseline Road
+        <br>
+        Tempe, AZ 85283
+    </footer>
+
+    <!-- JavaScript section -->
+    <script>
+
+        // Variable to store movement interval
+        let moveInterval = null;
+
+        // Get references to buttons and image
+        const startButton = document.getElementById("startButton");
+        const stopButton = document.getElementById("stopButton");
+        const memeImage = document.getElementById("memeImage");
+        const message = document.getElementById("message");
+        const form = document.getElementById("controlForm");
+
+        // Event listener for form submit (Start button)
+        form.addEventListener("submit", function(event) {
+
+            // Prevent page refresh
+            event.preventDefault();
+
+            // Call function to handle start
+            enableStart();
+
+        });
+
+        // Event listener for Stop button click
+        stopButton.addEventListener("click", function() {
+
+            // Call function to handle stop
+            enableStop();
+
+        });
+
+        // Function to enable/disable Start button
+        function enableStart() {
+
+            // Disable Start button
+            startButton.disabled = true;
+
+            // Enable Stop button
+            stopButton.disabled = false;
+
+            // Show message using innerHTML
+            message.innerHTML = "Meme is moving!";
+
+            // Call function to move meme
+            moveMeme();
+
+        }
+
+        // Function to enable/disable Stop button
+        function enableStop() {
+
+            // Enable Start button
+            startButton.disabled = false;
+
+            // Disable Stop button
+            stopButton.disabled = true;
+
+            // Show message using innerHTML
+            message.innerHTML = "Meme has stopped!";
+
+            // Call function to stop meme
+            stopMeme();
+
+        }
+
+        // Function that moves meme the image randomly
+        function moveMeme() {
+
+            // Set interval to move image every 500 milliseconds
+            moveInterval = setInterval(function() {
+
+                // Generate random X position
+                let x = Math.random() * (window.innerWidth - 200);
+
+                // Generate random Y position
+                let y = Math.random() * (window.innerHeight - 200);
+
+                // Apply new position
+                memeImage.style.left = x + "px";
+                memeImage.style.top = y + "px";
+
+            }, 500);
+        }
+
+        // Function that stops meme movement
+        function stopMeme() {
+
+            // Clear the interval
+            clearInterval(moveInterval);
+
+        }
+
+    </script>
+
+</body>
 </html>
