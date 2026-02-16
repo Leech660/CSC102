@@ -1,0 +1,194 @@
+<!-- 
+    Name: Keagan Camacho
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Set character encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Make page responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page title -->
+    <title>Palindrome Checker</title>
+
+    <!-- Import Google Font for creative design -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS styling -->
+    <style>
+        /* background */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: black;
+            text-align: center;
+            padding: 40px;
+            color: white;
+        }
+
+        /* Style main container */
+        .container {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0px 0px 20px #555;
+        }
+
+        /* Style emoji */
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        /* Style input box */
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        /* Style submit button */
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background-color: #ffcc00;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Style result message area */
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Style goodbye message */
+        #goodbye {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #ff9999;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Main UI container -->
+    <div class="container">
+
+        <!-- Cat :3 -->
+        <div class="emoji">🐱</div>
+
+        <!-- Main heading -->
+        <h1>Palindrome Checker</h1>
+
+        <!-- Form for user input-->
+        <form id="palindromeForm">
+
+            <!-- Text input field -->
+            <input type="text" id="userInput" placeholder="Enter text here" required>
+
+            <br>
+
+            <!-- Submit button -->
+            <button type="submit">Check</button>
+
+            <br><br>
+
+            <!-- Option to continue loop -->
+            <label>
+                <input type="checkbox" id="continueCheck" checked>
+                Enter another word after this?
+            </label>
+
+        </form>
+
+        <!-- Div to display palindrome result -->
+        <div id="result"></div>
+
+        <!-- Div to display goodbye message -->
+        <div id="goodbye"></div>
+
+    </div>
+
+    <!-- JavaScript section -->
+    <script>
+
+        // Get reference to the form element
+        var form = document.getElementById("palindromeForm");
+
+        // Get reference to user input field
+        var input = document.getElementById("userInput");
+
+        // Get reference to result display area
+        var resultDiv = document.getElementById("result");
+
+        // Get reference to goodbye message area
+        var goodbyeDiv = document.getElementById("goodbye");
+
+        // Get reference to continue checkbox
+        var continueCheckbox = document.getElementById("continueCheck");
+
+        // Create a control variable
+        var keepRunning = true;
+
+        form.onsubmit = function (event) {
+
+            // Prevent page from refreshing
+            event.preventDefault();
+
+            // Only continue if loop is active
+            if (keepRunning === true) {
+
+                // Get user input value
+                var text = input.value;
+
+                // Remove spaces and convert to lowercase
+                var cleanedText = text.replace(/\s+/g, "").toLowerCase();
+
+                // Reverse the cleaned text
+                var reversedText = cleanedText.split("").reverse().join("");
+
+                // Check if cleaned text equals reversed text
+                if (cleanedText === reversedText) {
+
+                    resultDiv.innerHTML = "\"" + text + "\" is a PALINDROME.";
+
+                } else {
+
+                    resultDiv.innerHTML = "\"" + text + "\" is NOT a palindrome.";
+
+                }
+
+                // Clear input field
+                input.value = "";
+
+                // Check if user wants to continue
+                if (continueCheckbox.checked === false) {
+
+                    keepRunning = false;
+
+                    input.disabled = true;
+
+                    form.querySelector("button").disabled = true;
+
+                    goodbyeDiv.innerHTML = "Thank you for using the Palindrome Checker.";
+
+                }
+            }
+        };
+
+    </script>
+
+</body>
+
+</html>
