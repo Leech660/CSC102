@@ -1,6 +1,4 @@
-<!-- 
-    Name: Keagan Camacho
--->
+<!--     Name: Keagan Camacho   -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,10 +77,13 @@
 
 <body>
 
+    <!-- Background audio element -->
+    <audio id="backgroundMusic" src="us-lab-background.mp3" autoplay loop></audio>
+
     <!-- Main UI container -->
     <div class="container">
 
-        <!-- Cat :3 -->
+        <!-- Cat emoji -->
         <div class="emoji">🐱</div>
 
         <!-- Main heading -->
@@ -138,6 +139,7 @@
         // Create a control variable
         var keepRunning = true;
 
+        // Form submit event
         form.onsubmit = function (event) {
 
             // Prevent page from refreshing
@@ -179,7 +181,6 @@
                     form.querySelector("button").disabled = true;
 
                     goodbyeDiv.innerHTML = "Thank you for using the Palindrome Checker.";
-
                 }
             }
         };
