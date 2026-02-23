@@ -1,22 +1,17 @@
-<!-- Keagan, 1/2026 -->
-<!-- This tells the browser this is an HTML5 document -->
+<!-- Keagan, 2/22/2026 -->
 <!DOCTYPE html>
 
-<!-- Root HTML tag -->
 <html>
 
-<!-- Head section contains information for the browser -->
 <head>
 
-    <!-- Title shown in browser tab -->
+    <!-- Title of page -->
     <title>CSC102 Home Page</title>
 
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="main.css">
-
-    <!-- Internal styling for creative look and feel -->
+    <!-- Creative styling -->
     <style>
-        /* Style the entire page background */
+
+        /* Style entire page */
         body {
             background: linear-gradient(to right, #1e3c72, #2a5298);
             color: white;
@@ -24,7 +19,7 @@
             text-align: center;
         }
 
-        /* Style the meme image */
+        /* Style meme image */
         #memeImage {
             position: absolute;
             width: 200px;
@@ -50,152 +45,167 @@
             background-color: crimson;
         }
 
-        /* Message styling */
+        /* Style message output */
         #message {
             font-size: 20px;
             margin-top: 15px;
         }
+
+        /* Style input field */
+        input {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+
     </style>
 
 </head>
 
-<!-- Body holds content visible to user -->
 <body>
 
     <!-- Header section -->
-    <header>
-        <h1>Welcome to my CSC102 Home Page</h1>
+    <h1>Welcome to my CSC102 Home Page</h1>
 
-        <!-- Navigation menu -->
-        <nav>
-            <a href="index.html">Home</a>
-            <br>
-            <a href="boards.html">Boards</a>
-        </nav>
-    </header>
-
-    <!-- Meme image displayed on page -->
+    <!-- Meme image -->
     <img id="memeImage" src="MEME.png">
 
-    <!-- Form required for user input and submit -->
-    <form id="controlForm">
+    <!-- FORM for start/stop buttons -->
+    <form onsubmit="handleStart(event)">
 
-        <!-- Start button -->
+        <!-- Start button (submit required) -->
         <button type="submit" id="startButton">Start</button>
 
         <!-- Stop button -->
-        <button type="button" id="stopButton" disabled>Stop</button>
+        <button type="button" id="stopButton" onclick="enableStop()" disabled>Stop</button>
 
     </form>
 
-    <!-- Area for validation messages using innerHTML -->
+    <!-- FORM for palindrome validation -->
+    <form onsubmit="checkPalindrome(event)">
+
+        <!-- User text input -->
+        <input type="text" id="userInput" placeholder="Enter text here">
+
+        <!-- Submit button -->
+        <button type="submit">Check Palindrome</button>
+
+    </form>
+
+    <!-- Message output using innerHTML -->
     <div id="message"></div>
 
-    <!-- Footer section -->
-    <footer>
-        Keagan
-        <br>
-        University of Advancing Technology
-        <br>
-        2625 West Baseline Road
-        <br>
-        Tempe, AZ 85283
-    </footer>
-
-    <!-- JavaScript section -->
     <script>
 
-        // Variable to store movement interval
+        // Variable for movement interval
         let moveInterval = null;
 
-        // Get references to buttons and image
-        const startButton = document.getElementById("startButton");
-        const stopButton = document.getElementById("stopButton");
+        // Get meme image element
         const memeImage = document.getElementById("memeImage");
+
+        // Get message area
         const message = document.getElementById("message");
-        const form = document.getElementById("controlForm");
 
-        // Event listener for form submit (Start button)
-        form.addEventListener("submit", function(event) {
+        // CLASS example
+        class MemeController {
 
-            // Prevent page refresh
+            // Constructor sets speed
+            constructor(speed) {
+                this.speed = speed;
+            }
+
+            // Method to move meme
+            move() {
+
+                // Use loop concept by repeating movement
+                moveInterval = setInterval(function() {
+
+                    // Random X position
+                    let x = Math.random() * (window.innerWidth - 200);
+
+                    // Random Y position
+                    let y = Math.random() * (window.innerHeight - 200);
+
+                    // Apply new position
+                    memeImage.style.left = x + "px";
+                    memeImage.style.top = y + "px";
+
+                }, this.speed);
+            }
+
+        }
+
+        // Create object from class
+        const meme = new MemeController(500);
+
+        // Function handles start button
+        function handleStart(event) {
+
+            // Prevent refresh
             event.preventDefault();
 
-            // Call function to handle start
-            enableStart();
+            // Disable start button
+            document.getElementById("startButton").disabled = true;
 
-        });
+            // Enable stop button
+            document.getElementById("stopButton").disabled = false;
 
-        // Event listener for Stop button click
-        stopButton.addEventListener("click", function() {
-
-            // Call function to handle stop
-            enableStop();
-
-        });
-
-        // Function to enable/disable Start button
-        function enableStart() {
-
-            // Disable Start button
-            startButton.disabled = true;
-
-            // Enable Stop button
-            stopButton.disabled = false;
-
-            // Show message using innerHTML
+            // Update message
             message.innerHTML = "Meme is moving!";
 
-            // Call function to move meme
-            moveMeme();
-
+            // Call object method
+            meme.move();
         }
 
-        // Function to enable/disable Stop button
+        // Function handles stop button
         function enableStop() {
 
-            // Enable Start button
-            startButton.disabled = false;
+            // Enable start
+            document.getElementById("startButton").disabled = false;
 
-            // Disable Stop button
-            stopButton.disabled = true;
+            // Disable stop
+            document.getElementById("stopButton").disabled = true;
 
-            // Show message using innerHTML
-            message.innerHTML = "Meme has stopped!";
-
-            // Call function to stop meme
-            stopMeme();
-
-        }
-
-        // Function that moves meme the image randomly
-        function moveMeme() {
-
-            // Set interval to move image every 500 milliseconds
-            moveInterval = setInterval(function() {
-
-                // Generate random X position
-                let x = Math.random() * (window.innerWidth - 200);
-
-                // Generate random Y position
-                let y = Math.random() * (window.innerHeight - 200);
-
-                // Apply new position
-                memeImage.style.left = x + "px";
-                memeImage.style.top = y + "px";
-
-            }, 500);
-        }
-
-        // Function that stops meme movement
-        function stopMeme() {
-
-            // Clear the interval
+            // Stop movement
             clearInterval(moveInterval);
+
+            // Update message
+            message.innerHTML = "Meme has stopped!";
+        }
+
+        // Function to check palindrome
+        function checkPalindrome(event) {
+
+            // Prevent form refresh
+            event.preventDefault();
+
+            // Get user input
+            let text = document.getElementById("userInput").value;
+
+            // STRING MANIPULATION
+            let cleaned = text.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+
+            // Reverse string using loop
+            let reversed = "";
+            for (let i = cleaned.length - 1; i >= 0; i--) {
+                reversed += cleaned[i];
+            }
+
+            // DECISION LOGIC
+            if (cleaned === "") {
+                message.innerHTML = "Please enter text.";
+            }
+            else if (cleaned === reversed) {
+                message.innerHTML = text + " is a PALINDROME!";
+            }
+            else {
+                message.innerHTML = text + " is NOT a palindrome.";
+            }
 
         }
 
     </script>
 
 </body>
+
 </html>
